@@ -1,0 +1,38 @@
+{
+  "provider": {
+    "name": "demo2"
+  },
+  "consumer": {
+    "name": "test"
+  },
+  "interactions": [
+    {
+      "description": "",
+      "request": {
+        "method": "GET",
+        "path": "/user3/user2",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "first_name": "first name 2",
+          "last_name": "last name 2"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pact-specification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "3.5.21"
+    }
+  }
+}
