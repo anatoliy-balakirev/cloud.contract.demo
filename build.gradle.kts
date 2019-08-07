@@ -1,19 +1,26 @@
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
 import org.springframework.cloud.contract.verifier.config.TestFramework
 import org.springframework.cloud.contract.verifier.config.TestMode
+import org.springframework.cloud.contract.verifier.plugin.ContractVerifierExtension
 
 
 buildscript {
+    repositories {
+        mavenLocal()
+    }
     dependencies {
         // This is needed for `org.springframework.cloud.contract` plugin to pick up pact jsons as an input:
         classpath("org.springframework.cloud:spring-cloud-contract-pact:2.1.2.RELEASE")
+        classpath ("org.springframework.cloud:spring-cloud-contract-gradle-plugin:2.1.2.RELEASE")
+//        classpath ("org.springframework.cloud:spring-cloud-contract-gradle-plugin:2.2.0.BUILD-SNAPSHOT")
     }
 }
+
+apply(plugin = "org.springframework.cloud.contract")
 
 plugins {
     id("org.springframework.boot") version "2.1.6.RELEASE"
     id("java")
-    id("org.springframework.cloud.contract") version "2.1.2.RELEASE"
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
 }
 
@@ -43,11 +50,11 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.5.0")
 }
 
-contracts {
-    packageWithBaseClasses = "com.example.demo.contract"
-    basePackageForTests = packageWithBaseClasses
-    testMode = TestMode.WEBTESTCLIENT
-    testFramework = TestFramework.JUNIT5
+afterEvaluate {
+    the<ContractVerifierExtension>().packageWithBaseClasses = "com.example.demo.contract"
+    the<ContractVerifierExtension>().basePackageForTests = "com.example.demo.contract"
+    the<ContractVerifierExtension>().testMode = TestMode.WEBTESTCLIENT
+    the<ContractVerifierExtension>().testFramework = TestFramework.JUNIT5
 }
 
 java {
