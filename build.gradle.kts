@@ -50,11 +50,11 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.5.0")
 }
 
-afterEvaluate {
-    the<ContractVerifierExtension>().packageWithBaseClasses = "com.example.demo.contract"
-    the<ContractVerifierExtension>().basePackageForTests = "com.example.demo.contract"
-    the<ContractVerifierExtension>().testMode = TestMode.WEBTESTCLIENT
-    the<ContractVerifierExtension>().testFramework = TestFramework.JUNIT5
+configure<ContractVerifierExtension> {
+    packageWithBaseClasses = "com.example.demo.contract"
+    basePackageForTests = packageWithBaseClasses
+    testMode = TestMode.WEBTESTCLIENT
+    testFramework = TestFramework.JUNIT5
 }
 
 java {
